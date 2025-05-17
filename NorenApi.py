@@ -1074,6 +1074,7 @@ class NorenApi:
         senddata['exch'] = exch
         senddata['tsym'] = tsym
         senddata['qty'] = qty
+        senddata['prc'] = price
         senddata['prd'] = product_type
         senddata['trantype'] = trantype
         senddata['prctyp'] = price_type
