@@ -89,7 +89,8 @@ class NorenApi:
           'getquotes': '/GetQuotes',
           'span_calculator' :'/SpanCalc',
           'option_greek' :'/GetOptionGreek',
-          'get_daily_price_series' :'/EODChartData',      
+          'get_daily_price_series' :'/EODChartData',
+          'get_order_margin' : '/GetOrderMargin',
       },
       'websocket_endpoint': 'wss://wsendpoint/',
       #'eoddata_endpoint' : 'http://eodhost/'
@@ -1051,6 +1052,32 @@ class NorenApi:
         senddata = {}
         senddata['actid'] =self.__accountid 
         senddata['pos'] = positions
+        payload = 'jData=' + json.dumps(senddata,default=lambda o: o.encode())+ f'&jKey={self.__susertoken}'
+        reportmsg(payload)
+
+        res = requests.post(url, data=payload)
+        reportmsg(res.text)
+
+        resDict = json.loads(res.text)        
+
+        return resDict
+
+    def get_order_margin(self, exch, tsym, qty, price, product_type, trantype, price_type  ):
+        config = NorenApi.__service_config
+        #prepare the uri
+        url = f"{config['host']}{config['routes']['span_calculator']}" 
+        reportmsg(url) 
+
+        senddata = {}
+        senddata['uid'] = self.__username
+        senddata['actid'] =self.__accountid
+        senddata['exch'] = exch
+        senddata['tsym'] = tsym
+        senddata['qty'] = qty
+        senddata['prd'] = product_type
+        senddata['trantype'] = trantype
+        senddata['prctyp'] = price_type
+        
         payload = 'jData=' + json.dumps(senddata,default=lambda o: o.encode())+ f'&jKey={self.__susertoken}'
         reportmsg(payload)
 
