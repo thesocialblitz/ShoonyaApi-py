@@ -1065,7 +1065,7 @@ class NorenApi:
     def get_order_margin(self, exch, tsym, qty, price, product_type, trantype, price_type  ):
         config = NorenApi.__service_config
         #prepare the uri
-        url = f"{config['host']}{config['routes']['span_calculator']}" 
+        url = f"{config['host']}{config['routes']['get_order_margin']}" 
         reportmsg(url) 
 
         senddata = {}
