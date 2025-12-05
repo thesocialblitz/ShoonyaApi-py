@@ -79,6 +79,7 @@ class NorenApi:
           'orderbook': '/OrderBook',
           'tradebook': '/TradeBook',          
           'singleorderhistory': '/SingleOrdHist',
+          'singleorderstatus': '/SingleOrdStatus',
           'searchscrip': '/SearchScrip',
           'TPSeries' : '/TPSeries',     
           'optionchain' : '/GetOptionChain',     
@@ -683,6 +684,32 @@ class NorenApi:
 
         #prepare the uri
         url = f"{config['host']}{config['routes']['singleorderhistory']}" 
+        print(url)
+        
+        #prepare the data
+        values              = {'ordersource':'API'}
+        values["uid"]       = self.__username
+        values["norenordno"]    = orderno
+        
+        payload = 'jData=' + json.dumps(values) + f'&jKey={self.__susertoken}'
+        
+        reportmsg(payload)
+
+        res = requests.post(url, data=payload)
+        reportmsg(res.text)
+
+        resDict = json.loads(res.text)
+        #error is a json with stat and msg wchih we printed earlier.
+        if type(resDict) != list:                            
+                return None
+
+        return resDict
+
+    def single_order_status(self, orderno):
+        config = NorenApi.__service_config
+
+        #prepare the uri
+        url = f"{config['host']}{config['routes']['singleorderstatus']}" 
         print(url)
         
         #prepare the data
