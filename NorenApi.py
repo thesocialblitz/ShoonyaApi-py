@@ -705,7 +705,7 @@ class NorenApi:
 
         return resDict
 
-    def single_order_status(self, orderno):
+    def single_order_status(self, orderno, exchange):
         config = NorenApi.__service_config
 
         #prepare the uri
