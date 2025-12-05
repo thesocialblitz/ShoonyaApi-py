@@ -689,7 +689,7 @@ class NorenApi:
         #prepare the data
         values              = {'ordersource':'API'}
         values["uid"]       = self.__username
-        values["norenordno"]    = orderno
+        values["norenordno"]    = str(orderno)
         
         payload = 'jData=' + json.dumps(values) + f'&jKey={self.__susertoken}'
         
@@ -715,7 +715,9 @@ class NorenApi:
         #prepare the data
         values              = {'ordersource':'API'}
         values["uid"]       = self.__username
-        values["norenordno"]    = orderno
+        values["actid"]         = self.__accountid
+        values["norenordno"]    = str(orderno)
+        values["exch"]          = exchange
         
         payload = 'jData=' + json.dumps(values) + f'&jKey={self.__susertoken}'
         
